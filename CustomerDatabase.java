@@ -51,6 +51,6 @@ public class CustomerDatabase {
     }
 
     public void deposit(String accountNumber, int amount, TreeMap<String, CustomerDatabase> db){
-        db.get(accountNumber).setAccountBalance(amount);
+        db.get(accountNumber).setAccountBalance(getAccountBalance()+amount);
     }
 }

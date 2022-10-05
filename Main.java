@@ -1,3 +1,4 @@
+import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeMap;
 
@@ -13,7 +14,7 @@ public class Main {
             HandleDenomination handleDenomination=new HandleDenomination();
             while (true){
                 int option=0;
-                System.out.println("Choose any Option\n1. Load ATM\n2. Withdrawal\n3. Check ATM Balance\n4. Create Account\n5. Transfer\n6. Check Account Balance\n7. End");
+                System.out.println("Choose any Option(Before ATM Withdraw...You need to Load ATM)\n1. Load ATM\n2. Withdraw From ATM\n3. Check ATM Balance\n4. Create Account\n5. Transfer\n6. Check Account Balance\n7. Display All Customer Details\n8. End");
                 option=scanner.nextInt();
                 System.out.println();
                 scanner.nextLine();
@@ -43,9 +44,9 @@ public class Main {
 
 
                         System.out.println("Denomination            Number  Value       ");
-                        System.out.println("2000                    "+handleDenomination.getTwoThousand()+"     "+2000*handleDenomination.getTwoThousand());
-                        System.out.println("500                    "+handleDenomination.getFiveHundred()+"     "+500*handleDenomination.getFiveHundred());
-                        System.out.println("100                    "+handleDenomination.getOneHundred()+"     "+100*handleDenomination.getOneHundred());
+                        System.out.println("2000                    "+handleDenomination.getTwoThousand()+"       "+2000*handleDenomination.getTwoThousand());
+                        System.out.println("500                     "+handleDenomination.getFiveHundred()+"       "+500*handleDenomination.getFiveHundred());
+                        System.out.println("100                     "+handleDenomination.getOneHundred()+"       "+100*handleDenomination.getOneHundred());
                         break;
                     }
                     case 2:
@@ -95,8 +96,8 @@ public class Main {
                             System.out.println("Current ATM Balance");
                             System.out.println("Denomination            Number  Value       ");
                             System.out.println("2000                    "+handleDenomination.getTwoThousand()+"     "+2000*handleDenomination.getTwoThousand());
-                            System.out.println("500                    "+handleDenomination.getFiveHundred()+"     "+500*handleDenomination.getFiveHundred());
-                            System.out.println("100                    "+handleDenomination.getOneHundred()+"     "+100*handleDenomination.getOneHundred());
+                            System.out.println("500                     "+handleDenomination.getFiveHundred()+"     "+500*handleDenomination.getFiveHundred());
+                            System.out.println("100                     "+handleDenomination.getOneHundred()+"     "+100*handleDenomination.getOneHundred());
                             System.out.println("Total Amount available in ATM is = Rs. "+atmDatabase.getBalaceAmount());
                         }
                         break;
@@ -130,7 +131,9 @@ public class Main {
                         System.out.println("Enter the Pin Number : ");
                         String fromPinNumber=scanner.next();
                         if(handleCustomer.validAccountNumber(fromAccountNumber, db)&&handleCustomer.validPinNumber(fromAccountNumber, fromPinNumber, db)){
+                            System.out.println("Enter the Account Number to make Transfer : ");
                             String toAccountNumber=scanner.next();
+                            System.out.println("Enter the Amount to Transfer : ");
                             int transferAmount=scanner.nextInt();
                             handleCustomer.transferAmount(fromAccountNumber, toAccountNumber, transferAmount, db);
                         }
@@ -149,7 +152,7 @@ public class Main {
                         String pinNumber=scanner.next();
                         if(handleCustomer.validAccountNumber(accountNumber, db)&&handleCustomer.validPinNumber(accountNumber, pinNumber, db)){
                             System.out.println("AccNo  AccountHolder    PinNumber AccountBalance");
-                            System.out.println(accountNumber+" "+db.get(accountNumber).getCustomerName()+"    "+pinNumber+" "+db.get(accountNumber).getAccountBalance());
+                            System.out.println(accountNumber+"        "+db.get(accountNumber).getCustomerName()+"        "+pinNumber+"        "+db.get(accountNumber).getAccountBalance());
                         }
                         else{
                             System.out.println("Invalid Account Number or Pin Number");
@@ -157,6 +160,14 @@ public class Main {
                         break;
                     }
                     case 7:
+                    {
+                        System.out.println("-------- Customer Details ---------");
+                        System.out.println("AccNo    Account Holder    Pin Number    Account Balance");
+                        for(Map.Entry<String, CustomerDatabase> entry: db.entrySet()){
+                            System.out.println(entry.getValue().getAccountNumber()+"       "+entry.getValue().getCustomerName()+"        "+entry.getValue().getPinNumber()+"        "+entry.getValue().getAccountBalance());
+                        }
+                    }
+                    case 8:
                     {
                         System.out.println("Thankyou!");
                         System.exit(0);
