@@ -14,7 +14,7 @@ public class Main {
             HandleDenomination handleDenomination=new HandleDenomination();
             while (true){
                 int option=0;
-                System.out.println("Choose any Option(Before ATM Withdraw...You need to Load ATM)\n1. Load ATM\n2. Withdraw From ATM\n3. Check ATM Balance\n4. Create Account\n5. Transfer\n6. Check Account Balance\n7. Display All Customer Details\n8. End");
+                System.out.println("Choose any Option(Before ATM Withdraw...You need to Load ATM)\n1. Load ATM\n2. Withdraw From ATM\n3. Check ATM Balance\n4. Create Account\n5. Transfer\n6. Check Account Balance\n7. Display All Customer Details\n8. Deposit\n9. End");
                 option=scanner.nextInt();
                 System.out.println();
                 scanner.nextLine();
@@ -77,8 +77,10 @@ public class Main {
                             System.out.println();
                             if(flag==1)
                                 handleAtm.updateWithdraw(atmDatabase, withdrawAmount);
-                            else
+                            else {
                                 System.out.println("No Available Denomination");
+                                break;
+                            }
                         }
                         else{
                             System.out.println("Invalid Acoount Number or Pin Number");break;
@@ -93,18 +95,18 @@ public class Main {
                             continue;
                         }
                         else{
-                            System.out.println("Current ATM Balance");
+                            System.out.println("-------- Current ATM Balance --------");
                             System.out.println("Denomination            Number  Value       ");
-                            System.out.println("2000                    "+handleDenomination.getTwoThousand()+"     "+2000*handleDenomination.getTwoThousand());
-                            System.out.println("500                     "+handleDenomination.getFiveHundred()+"     "+500*handleDenomination.getFiveHundred());
-                            System.out.println("100                     "+handleDenomination.getOneHundred()+"     "+100*handleDenomination.getOneHundred());
+                            System.out.println("2000                    "+handleDenomination.getTwoThousand()+"       "+2000*handleDenomination.getTwoThousand());
+                            System.out.println("500                     "+handleDenomination.getFiveHundred()+"       "+500*handleDenomination.getFiveHundred());
+                            System.out.println("100                     "+handleDenomination.getOneHundred()+"       "+100*handleDenomination.getOneHundred());
                             System.out.println("Total Amount available in ATM is = Rs. "+atmDatabase.getBalaceAmount());
                         }
                         break;
                     }
                     case 4:
                     {
-                        System.out.println("Create Savings Account : ");
+                        System.out.println("-------- Create Savings Account -------- ");
                         System.out.println("Enter the New Account Number : ");
                         String accountNumber=scanner.nextLine();
                         System.out.println("Enter the Customer Name : ");
@@ -119,6 +121,7 @@ public class Main {
                         }
                         else{
                             System.out.println("Minimum Balance Must be 500 or above");
+                            break;
                         }
                         break;
                     }
@@ -139,6 +142,7 @@ public class Main {
                         }
                         else{
                             System.out.println("Invalid Account Number or Pin Number");
+                            break;
                         }
                         break;
                     }
@@ -156,6 +160,7 @@ public class Main {
                         }
                         else{
                             System.out.println("Invalid Account Number or Pin Number");
+                            break;
                         }
                         break;
                     }
@@ -169,7 +174,22 @@ public class Main {
                     }
                     case 8:
                     {
-                        System.out.println("Thankyou!");
+                        System.out.println("-------- Deposit --------");
+                        System.out.println("Enter the Account Number : ");
+                        String accountNumber=scanner.next();
+                        if(handleCustomer.validAccountNumber(accountNumber, db)){
+                            System.out.println("Enter the Amount to Deposit : ");
+                            int depositAmount=scanner.nextInt();
+                            db.get(accountNumber).deposit(accountNumber, depositAmount, db);
+                            System.out.println("Your Current Account Balance is Rs. "+db.get(accountNumber).getAccountBalance());
+                        }
+                        else{
+                            System.out.println("Please Enter valid Account Number...");break;
+                        }break;
+                    }
+                    case 9:
+                    {
+                        System.out.println("Thank You!");
                         System.exit(0);
                     }
                     default:

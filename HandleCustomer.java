@@ -15,10 +15,6 @@ public class HandleCustomer {
         return false;
     }
 
-    public void changePin(String accountNumber, String pinNumber, TreeMap<String, CustomerDatabase> db){
-        db.get(accountNumber).setPinNumber(pinNumber);
-    }
-
 
     public void transferAmount(String fromAccountNumber, String toAccountNumber, int amount, TreeMap<String, CustomerDatabase> db){
         db.get(fromAccountNumber).withdraw(fromAccountNumber, amount, db);
