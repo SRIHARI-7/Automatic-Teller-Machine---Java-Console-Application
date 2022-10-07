@@ -1,6 +1,6 @@
 
 public class HandleAtm {
-
+    // Refered some contents from https://github.com/gowthamrajk/ATM-System-with-Denominations/blob/main/ATM_System_with_Denominations/src/com/gowthamrajk/atmsystem/Main.java
     public static void updateDenomination(int amount, int denomination, HandleDenomination handleDenomination){
         if(amount==2000){
                 handleDenomination.setTwoThousand(handleDenomination.getTwoThousand()+denomination);
